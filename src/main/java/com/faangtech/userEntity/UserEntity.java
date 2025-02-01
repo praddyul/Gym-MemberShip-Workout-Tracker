@@ -1,5 +1,5 @@
 package com.faangtech.userEntity;
 
-public class UserEnity {
+public class UserEntity {
 
 }
