@@ -3,36 +3,30 @@ package com.gym.controller;
 import com.gym.membershipEntity.Membership;
 import com.gym.service.MembershipService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/membership")
+@RequestMapping("/memberships")
 public class MembershipController {
 
     @Autowired
-    private final MembershipService service;
+    private MembershipService membershipService;
 
-    public MembershipController(MembershipService service) {
-        this.service = service;
-    }
-
-    @PostMapping("/save")
-    public ResponseEntity<Membership> createMembership(@RequestBody Membership membership){
-        return ResponseEntity.status(201).body(service.createMembership(membership));
+    @PostMapping
+    public ResponseEntity<Membership> createMembership(@RequestBody Membership membership) {
+        Membership createdMembership = membershipService.createMembership(membership);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdMembership);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Membership>  getMembership(@PathVariable Long id){
-        Optional<Membership> membership=service.getMembershipById(id);
-        return membership.map(ResponseEntity::ok).orElseGet(()->ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/all")
-    public ResponseEntity<List<Membership>> getAllMemberships(){
-        return ResponseEntity.ok(service.getAllMemberships());
+    public ResponseEntity<Membership> getMembership(@PathVariable Long id) {
+        return membershipService.getMembershipById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 }
+
+
