@@ -25,13 +25,17 @@ public class WorkOutServiceImpl implements WorkOutService {
     }
     @Override
     public WorkoutProgress getProgress(String memberId){
-        Workout workout=repo.findByMemberId(memberId).get();
-        WorkoutProgress w1=new WorkoutProgress(workout.getUserId(), workout.getProgress()+" kg loss");
+        List<Workout> workout1=repo.findAll().stream().filter(workout -> workout.getMemberId().equals(memberId)).toList();
+        double sum=0.0;
+        for (Workout w:workout1){
+            sum+=w.getProgress();
+        }
+        WorkoutProgress w1=new WorkoutProgress(workout1.get(0).getUserId(), sum+" kg loss");
         return w1;
     }
 
     @Override
     public List<Workout> fetchHistory(int memberId){
-        return repo.findAll().stream().filter(workout -> workout.getMemberId().equals(memberId)).toList();
+        return repo.findAll().stream().filter(workout -> workout.getUserId().equals(userId)).toList();
     }
 }

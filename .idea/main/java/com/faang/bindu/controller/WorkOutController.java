@@ -25,13 +25,13 @@ public class WorkOutController {
        return ser.insertData(workout);
     }
 
-    @GetMapping("/goals/{memberId}")
-    public WorkoutProgress getProgress(@PathVariable String memberId){
+    @GetMapping("/goals")
+    public WorkoutProgress getProgress(@RequestBody String memberId){
         return ser.getProgress(memberId);
     }
 
-    @GetMapping("/fetch/{memberId}")
-    public List<Workout> fetchHistory(@PathVariable int memberId){
+    @GetMapping("/fetch")
+    public List<Workout> fetchHistory(@RequestBody int memberId){
         return ser.fetchHistory(memberId);
     }
 }
