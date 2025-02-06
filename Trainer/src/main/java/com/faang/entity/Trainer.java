@@ -9,11 +9,13 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "trainers")
 public class Trainer {
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    public Trainer() {
-		
+    private String trainerId;
+    private String userId;
+	
+    public Trainer() {	
 	}
  public Trainer(String trainerId, String userId) {
 		
@@ -32,7 +34,6 @@ public class Trainer {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	private String trainerId;
-    private String userId;
+	
 }
 
